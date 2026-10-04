@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://x4u234cocxt8"]
+
+[node name="Obstaculos" type="Node2D" unique_id=763397061]
+
+[node name="Pinchos" type="Node2D" parent="." unique_id=1393388605]
+
+[node name="Area2D" type="Area2D" parent="Pinchos" unique_id=593332132]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pinchos/Area2D" unique_id=589066611]

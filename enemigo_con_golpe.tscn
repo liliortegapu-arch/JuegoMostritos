@@ -1,0 +1,130 @@
+[gd_scene format=3 uid="uid://oysnr4h63mrl"]
+
+[ext_resource type="Script" uid="uid://b05sfadidtao8" path="res://enemigo_con_golpe.gd" id="1_k1yds"]
+[ext_resource type="Texture2D" uid="uid://bf6d02t8s014s" path="res://juego/3 Dude_Monster/Dude_Monster_Idle_4.png" id="2_sror7"]
+[ext_resource type="Texture2D" uid="uid://ceusyllxae87x" path="res://juego/3 Dude_Monster/Dude_Monster_Attack2_6.png" id="3_m4swt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tporn"]
+radius = 6.0
+height = 22.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxxvn"]
+atlas = ExtResource("2_sror7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uweei"]
+atlas = ExtResource("2_sror7")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4vren"]
+atlas = ExtResource("2_sror7")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_28o81"]
+atlas = ExtResource("2_sror7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xbcv"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o6406"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ia3rm"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqwrh"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqpdp"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x4amx"]
+atlas = ExtResource("3_m4swt")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_axogk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxxvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uweei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4vren")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_28o81")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xbcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o6406")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ia3rm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqwrh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqpdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x4amx")
+}],
+"loop": 0,
+"name": &"punch",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h1doj"]
+size = Vector2(37, 19)
+
+[node name="enemigoConGolpe" type="Node2D" unique_id=2095329376]
+script = ExtResource("1_k1yds")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1143389662]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1571429457]
+position = Vector2(1, 2)
+shape = SubResource("CapsuleShape2D_tporn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=1580998520]
+texture_filter = 1
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_axogk")
+animation = &"punch"
+flip_h = true
+
+[node name="RayCastDerecha2D" type="RayCast2D" parent="CharacterBody2D" unique_id=1770966927]
+position = Vector2(1, 6)
+target_position = Vector2(17, 0)
+
+[node name="RayCastIzquierda2D" type="RayCast2D" parent="CharacterBody2D" unique_id=743278655]
+position = Vector2(0, 6)
+target_position = Vector2(-20, 0)
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" unique_id=236547277]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D" unique_id=1776276714]
+position = Vector2(-0.5, 1.5)
+shape = SubResource("RectangleShape2D_h1doj")
+
+[connection signal="animation_finished" from="CharacterBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="frame_changed" from="CharacterBody2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="." method="_on_area_2d_body_entered"]
